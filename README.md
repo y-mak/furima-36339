@@ -45,15 +45,15 @@
 ### Association
 - belongs_to :user
 - belongs_to :item
+- has_one :address
 
 
 ## addresses Table
 
 |Column             |Type        |Options                           |
 |-------------------|------------|----------------------------------|
-|add                |string      |null: false                       |
 |postal_code        |string      |null: false                       |
-|area_id            |string      |null: false                       |
+|area_id            |integer     |null: false                       |
 |municipalities     |string      |null: false                       |
 |house_number       |string      |null: false                       |
 |building           |string      |                                  |
