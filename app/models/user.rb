@@ -6,15 +6,12 @@ class User < ApplicationRecord
 
   validates :nick_name, presence: true
   validates :email, presence: true
-  # validates :encrypted_password, presence: true
-  validates :last_name, presence: true
-  validates :first_name, presence: true
-  validates :last_name_kana, presence: true
-  validates :first_name_kana, presence: true
+  validates :last_name, presence: true, format:{with: /\A[ぁ-んァ-ン一-龥]/ }
+  validates :first_name, presence: true, format:{with: /\A[ぁ-んァ-ン一-龥]/ }
+  validates :last_name_kana, presence: true, format:{with: /\A[ァ-ヶー－]+\z/ }
+  validates :first_name_kana, presence: true, format:{with: /\A[ァ-ヶー－]+\z/ }
   validates :birthday, presence: true
-
-
-  validates :encrypted_password,:password,:password_confirmation,length:{minimum:6},format:{with: /(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,}/}
+  validates :encrypted_password,:password,:password_confirmation,format:{with: /\A[a-zA-Z0-9]+\z/}
 
 
   has_many :items
