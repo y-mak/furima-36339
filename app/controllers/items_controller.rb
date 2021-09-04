@@ -13,7 +13,7 @@ class ItemsController < ApplicationController
 
   private
   def item_params
-    parems.require(:item).permit(:name, :comment, :category_id, :status_id, :fee_id, :area_id, :days_id, :price, :user)
+    parems.require(:item).permit(:name, :comment, :category_id, :status_id, :fee_id, :area_id, :days_id, :price, :user, :image)
   end
 
 end
