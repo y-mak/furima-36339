@@ -1,10 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Item, type: :model do
-  #pending "add some examples to (or delete) #{__FILE__}"
   before do
     @item = FactoryBot.build(:item)
-    #@item.image = fixture_file_upload("/files/test_image.jpg")
   end
   describe '商品出品' do
     context '商品できる場合' do
