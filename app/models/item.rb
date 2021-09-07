@@ -18,7 +18,7 @@ class Item < ApplicationRecord
   validates :image, presence: { message: 'をアップロードしてください' }
 
   belongs_to :user
-  has_one :record
+  #has_one :record
   has_one_attached :image
 
   
