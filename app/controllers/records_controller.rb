@@ -23,7 +23,7 @@ class RecordsController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = "sk_test_cb3b987327069d8d91082a05"
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
       Payjp::Charge.create(
         amount: @item[:price],  # 商品の値段
         card: record_params[:token],
