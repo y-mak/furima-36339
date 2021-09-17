@@ -1,4 +1,7 @@
 class RecordsController < ApplicationController
+  before_action :authenticate_user!, only: [:index]
+  before_action :move_to_root_path, only: [:index]
+
   def index
     @item = Item.find(params[:item_id])
     @record_address = RecordAddress.new
@@ -13,6 +16,13 @@ class RecordsController < ApplicationController
       redirect_to root_path
     else
       render :index
+    end
+  end
+
+  def move_to_root_path
+    @item = Item.find(params[:item_id])
+    if @item.user == current_user
+      redirect_to root_path
     end
   end
 
