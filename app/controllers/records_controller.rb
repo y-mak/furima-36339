@@ -1,14 +1,13 @@
 class RecordsController < ApplicationController
   before_action :authenticate_user!, only: [:index]
+  before_action :set_record, only: [:index, :create, :move_to_root_path]
   before_action :move_to_root_path, only: [:index]
 
   def index
-    @item = Item.find(params[:item_id])
     @record_address = RecordAddress.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @record_address = RecordAddress.new(record_params)
     if @record_address.valid?
       pay_item
@@ -20,7 +19,6 @@ class RecordsController < ApplicationController
   end
 
   def move_to_root_path
-    @item = Item.find(params[:item_id])
     if @item.user == current_user || @item.record.present?
       redirect_to root_path
     end
@@ -29,7 +27,11 @@ class RecordsController < ApplicationController
   private
 
   def record_params
-    params.require(:record_address).permit(:postal_code, :area_id, :municipalities, :house_number, :building, :tel, :record_id).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+    params.require(:record_address).permit(:postal_code, :area_id, :municipalities, :house_number, :building, :tel).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+  end
+
+  def set_record
+    @item = Item.find(params[:item_id])
   end
 
   def pay_item

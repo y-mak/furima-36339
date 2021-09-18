@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit, :destroy]
   before_action :move_to_index, only: [:edit, :destroy]
   before_action :move_to_root_path, only: [:edit]
+  before_action :set_item, only: [:create, :show, :edit, :update, :move_to_index, :move_to_root_path]
   
   def index
     @items = Item.all.order("created_at DESC")
@@ -12,7 +13,6 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(item_params)
     if @item.save
       redirect_to root_path
     else
@@ -21,15 +21,12 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
   end
 
   def edit
-    @item = Item.find(params[:id])
   end
 
   def update
-    @item = Item.find(params[:id])
     if @item.update(item_params)
       redirect_to item_path
     else
@@ -48,15 +45,17 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:name, :comment, :category_id, :status_id, :fee_id, :area_id, :shipping_day_id, :price, :image).merge(user_id: current_user.id)
   end
 
-  def move_to_index
+  def set_item
     @item = Item.find(params[:id])
-    unless @item.user == current_user || @item.record.blank?
+  end
+
+  def move_to_index
+    unless @item.user == current_user
       redirect_to root_path
     end
   end
 
   def move_to_root_path
-    @item = Item.find(params[:id])
     if @item.record.present?
       redirect_to root_path
     end

@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :record_address do
     postal_code           { '123-4567' }
-    area_id               { '34' }
+    area_id               { 34 }
     municipalities        { '室蘭市' }
     house_number          { '田町1丁目'}
     building              { 'ハニーパーク101号室' }

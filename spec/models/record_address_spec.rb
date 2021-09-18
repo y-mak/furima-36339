@@ -40,6 +40,11 @@ RSpec.describe RecordAddress, type: :model do
         @record_address.valid?
         expect(@record_address.errors.full_messages).to include("Area can't be blank")
       end
+      it '都道府県の情報が「--」では登録できない' do
+        @record_address.area_id = 1
+        @record_address.valid?
+        expect(@record_address.errors.full_messages).to include("Area can't be blank")
+      end
       it '市区町村が必須であること' do
         @record_address.municipalities = ''
         @record_address.valid?
@@ -57,6 +62,16 @@ RSpec.describe RecordAddress, type: :model do
       end
       it '電話番号は、10桁以上11桁以内の半角数値のみ保存可能なこと' do
         @record_address.tel = '090-1234-5678'
+        @record_address.valid?
+        expect(@record_address.errors.full_messages).to include("Tel is invalid")
+      end
+      it '電話番号は、11桁を超えると購入できない' do
+        @record_address.tel = '123456789012'
+        @record_address.valid?
+        expect(@record_address.errors.full_messages).to include("Tel is invalid")
+      end
+      it '電話番号は、10桁未満では購入できない' do
+        @record_address.tel = '0901122'
         @record_address.valid?
         expect(@record_address.errors.full_messages).to include("Tel is invalid")
       end
