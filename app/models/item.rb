@@ -6,7 +6,7 @@ class Item < ApplicationRecord
   belongs_to_active_hash :area
   belongs_to_active_hash :shipping_day
   belongs_to :user
-  #has_one :record
+  has_one :record
   has_one_attached :image
 
   validates :name, presence: true, length: { maximum: 40 } 
