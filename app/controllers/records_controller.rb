@@ -21,7 +21,7 @@ class RecordsController < ApplicationController
 
   def move_to_root_path
     @item = Item.find(params[:item_id])
-    if @item.user == current_user
+    if @item.user == current_user || @item.record.present?
       redirect_to root_path
     end
   end
