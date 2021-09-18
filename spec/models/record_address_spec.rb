@@ -5,6 +5,8 @@ RSpec.describe RecordAddress, type: :model do
     before do
       user = FactoryBot.create(:user)
       item = FactoryBot.create(:item)
+      #record = FactoryBot.build(:record)
+      #@record_address = FactoryBot.build(:record_address, user_id: @record.user.id, item_id: @record.item.id)
       @record_address = FactoryBot.build(:record_address, user_id: user.id, item_id: item.id)
       sleep 0.1
     end
@@ -74,6 +76,24 @@ RSpec.describe RecordAddress, type: :model do
         @record_address.tel = '0901122'
         @record_address.valid?
         expect(@record_address.errors.full_messages).to include("Tel is invalid")
+      end
+    end
+    
+    context 'カード情報、アソシエーションに問題がある場合' do
+      it "tokenが空では登録できないこと" do
+        @record_address.token = nil
+        @record_address.valid?
+        expect(@record_address.errors.full_messages).to include("Token can't be blank")
+      end
+      it "userが空では登録できないこと" do
+        @record_address.user_id = nil
+        @record_address.valid?
+        expect(@record_address.errors.full_messages).to include("User can't be blank")
+      end
+      it "itemが空では登録できないこと" do
+        @record_address.item_id = nil
+        @record_address.valid?
+        expect(@record_address.errors.full_messages).to include("Item can't be blank")
       end
     end
   end

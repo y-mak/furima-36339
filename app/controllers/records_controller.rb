@@ -1,6 +1,6 @@
 class RecordsController < ApplicationController
   before_action :authenticate_user!, only: [:index]
-  before_action :set_record, only: [:index, :create, :move_to_root_path]
+  before_action :set_record, only: [:index, :create]
   before_action :move_to_root_path, only: [:index]
 
   def index
