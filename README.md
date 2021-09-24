@@ -10,10 +10,14 @@
 |last_name_kana     |string  |null: false                 |
 |first_name_kana    |string  |null: false                 |
 |birthday           |date    |null: false                 |
+|evaluation         |float   |null: false                 |
 
 ### Association
 - has_many :items
 - has_many :records
+- has_many :comments
+- has_many :cards
+- has_many :boards
 
 
 ## items Table
@@ -39,6 +43,7 @@
 - belongs_to_active_hash :fee
 - belongs_to_active_hash :area
 - belongs_to_active_hash :shipping_day
+- has_many :comments
 
 
 ## records Table
@@ -68,3 +73,53 @@
 
 ### Association
 - belongs_to :record
+
+
+## comments Table
+
+|Column             |Type        |Options                           |
+|-------------------|------------|----------------------------------|
+|comment            |text        |null: false                       |
+|item               |references  |null: false, foreign_key: true    |
+|user               |references  |null: false, foreign_key: true    |
+
+### Association
+- belongs_to :item
+- belongs_to :user
+
+
+## cords Table
+
+|Column             |Type        |Options                           |
+|-------------------|------------|----------------------------------|
+|customer_token     |string      |null: false                       |
+|user               |references  |null: false, foreign_key: true    |
+
+### Association
+- belongs_to :user
+
+
+## boards Table
+
+|Column             |Type        |Options                           |
+|-------------------|------------|----------------------------------|
+|name               |string      |null: false                       |
+|text               |text        |null: false                       |
+|user               |references  |null: false, foreign_key: true    |
+
+### Association
+- belongs_to :user
+- has_many :writes
+
+
+## writes Table
+
+|Column             |Type        |Options                           |
+|-------------------|------------|----------------------------------|
+|write              |text        |null: false                       |
+|board              |references  |null: false, foreign_key: true    |
+|user               |references  |null: false, foreign_key: true    |
+
+### Association
+- belongs_to :user
+- belongs_to :board
